@@ -75,13 +75,14 @@ const gallery = document.querySelector('ul.gallery');
 const markup = images
   .map(
     image => `<li>
-                                <a class="gallery-link" target="_blank" href="${image.original}">
-                                    <img 
-                                        class="gallery-image" 
-                                        src="${image.preview}" 
-                                        alt="${image.description}" />
-                                </a>
-                            </li>`
+                  <a class="gallery-link" href="${image.original}">
+                    <img 
+                        class="gallery-image" 
+                        src="${image.preview}" 
+                        alt="${image.description}"
+                    />
+                  </a>
+                </li>`
   )
   .join('');
 
@@ -90,14 +91,11 @@ gallery.insertAdjacentHTML('afterbegin', markup);
 
 //Використання методів бібліотеки для створення модельного вікна
 
-const newGallery = new SimpleLightbox('.gallery a', {
+const newGallery = new SimpleLightbox('.gallery li a', {
   captions: true, // Enable captions
   captionSelector: 'img', // Use the alt attribute of the image for captions
   captionType: 'attr', // Specify that captions come from an attribute
-  captionData: 'alt', // The attribute to use for captions
-  nav: true,
-  animationSpeed: 250,
-});
-gallery.on('show.simplelightbox', function () {
-  // Do something…
+  captionsData: 'alt', // The attribute to use for captions
+  nav: true, //Show arrow-navigation
+  captionDelay: 250,
 });
