@@ -71,5 +71,6 @@ form.addEventListener("submit", (event)=>{
         localStorage.clear();
         formData = {};
         form.reset();
+        messegeLocal.textContent = "";
     }
 });
