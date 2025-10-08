@@ -5,10 +5,7 @@ let formData = {
   message: '',
 };
 
-// 2. Використовуй метод делегування для відстеження змін
-// у формі через подію input. Зберігай актуальні дані
-// з полів email та message у formData та записуй цей об’єкт у локальне сховище.
-// Використовуй ключ "feedback-form-state" для зберігання даних у сховищі.
+
 
 const form = document.querySelector('.feedback-form');
 const localStorageKey = 'feedback-form-state';
@@ -18,16 +15,25 @@ const localStorageKey = 'feedback-form-state';
 // Якщо ні, залиш поля форми порожніми.
 const emailLocal = document.querySelector('.feedback-form input[type="email"]');
 const messageLocal = document.querySelector('.feedback-form [name="message"]');
+const savedItem = localStorage.getItem(localStorageKey);
 
-window.addEventListener('load', () => {
-  const savedItem = localStorage.getItem(localStorageKey);
-  if (savedItem) {
-    const parsedItem = JSON.parse(savedItem);
-    console.log(parsedItem);
-    emailLocal.value = parsedItem.email;
-    messageLocal.textContent = parsedItem.message;
-  }
-});
+if (savedItem) {
+  const parsedItem = JSON.parse(savedItem);
+  console.log(parsedItem);
+
+  // formData.email = parsedItem.email;
+  // formData.message = parsedItem.message;
+  formData = {...parsedItem};
+  console.log(`formData: ${formData.email}`);
+
+  emailLocal.value = parsedItem.email;
+  messageLocal.value = parsedItem.message;
+}
+
+// 2. Використовуй метод делегування для відстеження змін
+// у формі через подію input. Зберігай актуальні дані
+// з полів email та message у formData та записуй цей об’єкт у локальне сховище.
+// Використовуй ключ "feedback-form-state" для зберігання даних у сховищі.
 
 form.addEventListener('input', event => {
   if (event.target.name === 'email') {
@@ -59,6 +65,6 @@ form.addEventListener('submit', event => {
       message: '',
     };
     form.reset();
-    messageLocal.textContent = '';
+    messageLocal.value = '';
   }
 });
